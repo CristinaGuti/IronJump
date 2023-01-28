@@ -1,1 +1,1 @@
-IronJump.init()
+window.onload = () => IronJump.init()
