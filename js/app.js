@@ -9,25 +9,22 @@ const IronJump = {
     ctx: undefined,
     canvasSize: { w: 350, h: 600 },
     FPS: 60,
-    framesIndex: 0,
+    framesCounter: 0,
     keys: {
         LEFT: 'ArrowLeft',
         RIGTH: 'ArrowRight',
         SPACE: ' '
     },
     player: undefined,
-    playerLeft: false,
-    playerRight: false,
-    playerSize: { w: 50, h: 50 },
-    playerPos: { x: undefined, y: undefined },
+    obstacle: [],
+    initDistObstacles: 50,
 
-    // darle valor a:
-    // playerVel, gravity, posY0
 
     init() {
         this.setContext()
         this.setDimensions()
         this.createPlayer()
+        this.initObstacle()
         this.setEventListeners()
         this.start()
     },
@@ -36,12 +33,15 @@ const IronJump = {
         setInterval(() => {
             this.clearAll()
             this.drawAll()
-            this.framesIndex++
-            console.log(this.playerLeft)
-            console.log(this.playerRight)
+
+            this.generateObstacle()
+            this.clearObstacles()
+
+            this.checkCollision()
+
+            this.framesCounter++
 
         }, 1000 / this.FPS)
-
     },
 
     setContext() {
@@ -56,37 +56,55 @@ const IronJump = {
 
     setEventListeners() {
         document.onkeydown = evt => {
-            if (evt.key === this.keys.LEFT) this.playerLeft = true
-            if (evt.key === this.keys.RIGTH) this.playerRight = true
-            //if (evt.key === this.keys.SPACE) this.jump()
+            if (evt.key === this.keys.LEFT) this.player.moveLeft = true
+            if (evt.key === this.keys.RIGTH) this.player.moveRight = true
         }
         document.onkeyup = evt => {
-            if (evt.key === this.keys.LEFT) this.playerLeft = false
-            if (evt.key === this.keys.RIGTH) this.playerRight = false
+            if (evt.key === this.keys.LEFT) this.player.moveLeft = false
+            if (evt.key === this.keys.RIGTH) this.player.moveRight = false
         }
 
     },
 
-
-    // jump() {
-    //     this.playerPos.y -= 40;
-    //     this.playerVel -= 8;
-    // },
-
     createPlayer() {
-        this.playerPos = {
-            x: this.canvasSize.w / 2 - this.playerSize.w / 2,
-            y: this.canvasSize.h - this.playerSize.h * 2
+        this.player = new Player(this.ctx, this.canvasSize)
+    },
+
+    generateObstacle() {
+        if (this.framesCounter % 50 === 0) {
+            this.obstacle.push(new Obstacle(this.ctx, this.canvasSize))
         }
-        this.player = new Player(this.ctx, this.canvasSize, this.playerSize, this.playerPos, this.playerLeft, this.playerRight)
+    },
+
+    initObstacle() {
+        for (let i = 0; i < this.canvasSize.h; i += this.initDistObstacles) {
+
+            this.obstacle.push(new Obstacle(this.ctx, this.canvasSize))
+        }
+    },
+
+    clearObstacles() {
+        this.obstacle = this.obstacle.filter(elm => elm.position.y <= this.canvasSize.h)
     },
 
     drawAll() {
         this.player.draw()
+
+        this.obstacle.forEach(elm => elm.draw())
     },
 
     clearAll() {
         this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h)
-    }
+    },
 
+    checkCollision() {
+        this.obstacle.forEach(elm => {
+            if (this.player.position.x + this.player.size.w >= elm.position.x &&
+                this.player.position.x <= elm.position.x + elm.size.w &&
+                this.player.position.y + this.player.size.h >= elm.position.y &&
+                this.player.position.y + this.player.size.h <= elm.position.y + elm.size.h) {
+                this.player.collision = true
+            } //else this.player.collision = false
+        })
+    }
 }
