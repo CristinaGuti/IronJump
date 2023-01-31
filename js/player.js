@@ -10,7 +10,7 @@ class Player {
         this.size = { w: 50, h: 50 }
         this.position = {
             x: this.canvasSize.w / 2 - this.size.w / 2,
-            y: this.canvasSize.h - this.size.h * 3
+            y: this.canvasSize.h / 2
         }
         this.speed = { x: 0, y: 5 }
         this.gravity = 0.4
@@ -43,13 +43,14 @@ class Player {
         this.speed.y += this.gravity
 
         if (this.position.y > this.canvasSize.h - this.size.h) {
-            this.speed.y = this.jumpSpeed
-            this.speed.y *= -1
-        } else if (this.collision && this.speed.y > 0) {
+            this.speed.y = - this.jumpSpeed
+            console.log('YOU DIE')
+        }
+        if (this.collision && this.speed.y > 0) {
             this.collision = false
-            this.speed.y = this.jumpSpeed
+            this.speed.y = -this.jumpSpeed
             this.position.y -= this.jumpPosY
-            this.speed.y *= -1
+
         }
     }
 }

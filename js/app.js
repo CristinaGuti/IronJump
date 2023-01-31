@@ -1,7 +1,7 @@
 const IronJump = {
     name: 'IronJump',
     description: 'Game to jump on multiple platforms',
-    version: '1.0.1',
+    version: '1.3',
     license: undefined,
     author: 'Cristina Gutierrez y Daniel de Miguel',
 
@@ -16,15 +16,15 @@ const IronJump = {
         SPACE: ' '
     },
     player: undefined,
-    obstacle: [],
-    initDistObstacles: 50,
-
+    platforms: [],
+    platformSize: { w: undefined, h: undefined },
+    platformPosition: { x: undefined, y: undefined },
 
     init() {
         this.setContext()
         this.setDimensions()
         this.createPlayer()
-        this.initObstacle()
+        this.initialPlatforms()
         this.setEventListeners()
         this.start()
     },
@@ -33,12 +33,12 @@ const IronJump = {
         setInterval(() => {
             this.clearAll()
             this.drawAll()
+            console.log(this.platforms)
+            this.generatePlatforms()
+            this.clearPlatforms()
 
-            this.generateObstacle()
-            this.clearObstacles()
-
-            this.checkCollision()
-
+            // this.checkCollision()
+            // this.checkInitCollision()
             this.framesCounter++
 
         }, 1000 / this.FPS)
@@ -63,34 +63,38 @@ const IronJump = {
             if (evt.key === this.keys.LEFT) this.player.moveLeft = false
             if (evt.key === this.keys.RIGTH) this.player.moveRight = false
         }
-
     },
 
     createPlayer() {
         this.player = new Player(this.ctx, this.canvasSize)
     },
 
-    generateObstacle() {
-        if (this.framesCounter % 50 === 0) {
-            this.obstacle.push(new Obstacle(this.ctx, this.canvasSize))
+    generatePlatforms() {
+        if (this.framesCounter % 30 === 0) {
+            this.platformSize = { w: 60, h: 10 }
+            this.platformPosition = {
+                x: Math.random() * (this.canvasSize.w - this.platformSize.w),
+                y: (-this.platformSize.h)
+            }
+            this.platforms.push(new Platform(this.ctx, this.canvasSize, this.platformSize, this.platformPosition))
         }
     },
 
-    initObstacle() {
-        for (let i = 0; i < this.canvasSize.h; i += this.initDistObstacles) {
-
-            this.obstacle.push(new Obstacle(this.ctx, this.canvasSize))
-        }
+    initialPlatforms() {
+        this.platformSize = { w: 350, h: 10 }
+        this.position = { x: 0, y: 550 }
+        this.platforms.push(new Platform(this.ctx, this.canvasSize, this.size, this.position))
     },
 
-    clearObstacles() {
-        this.obstacle = this.obstacle.filter(elm => elm.position.y <= this.canvasSize.h)
+    clearPlatforms() {
+        this.platforms = this.platforms.filter(eachPlatform => eachPlatform.position.y <= this.canvasSize.h)
     },
 
     drawAll() {
         this.player.draw()
 
-        this.obstacle.forEach(elm => elm.draw())
+        console.log(this.platforms)
+        this.platforms.forEach(eachPlatform => eachPlatform.draw())
     },
 
     clearAll() {
@@ -98,13 +102,13 @@ const IronJump = {
     },
 
     checkCollision() {
-        this.obstacle.forEach(elm => {
-            if (this.player.position.x + this.player.size.w >= elm.position.x &&
-                this.player.position.x <= elm.position.x + elm.size.w &&
-                this.player.position.y + this.player.size.h >= elm.position.y &&
-                this.player.position.y + this.player.size.h <= elm.position.y + elm.size.h) {
+        this.platforms.forEach(eachPlatform => {
+            if (this.player.position.x + this.player.size.w >= eachPlatform.position.x &&
+                this.player.position.x <= eachPlatform.position.x + eachPlatform.size.w &&
+                this.player.position.y + this.player.size.h + this.player.speed.y >= eachPlatform.position.y &&
+                this.player.position.y + this.player.size.h <= eachPlatform.position.y + eachPlatform.size.h) {
                 this.player.collision = true
-            } //else this.player.collision = false
+            }
         })
-    }
+    },
 }
