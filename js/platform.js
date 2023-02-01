@@ -8,6 +8,19 @@ class Platform {
         this.type = type
 
         this.speed = 2
+
+        this.init()
+    }
+
+    init() {
+        this.imagePlatOrange = new Image()
+        this.imagePlatOrange.src = './img/PlatformOrange.png'
+        this.imagePlatYellow = new Image()
+        this.imagePlatYellow.src = './img/PlatformYellow.png'
+        this.imagePlatBlue = new Image()
+        this.imagePlatBlue.src = './img/PlatformBlue.png'
+        this.imagePlatPurple = new Image()
+        this.imagePlatPurple.src = './img/PlatformPurple.png'
     }
 
     draw() {
@@ -15,20 +28,16 @@ class Platform {
 
         switch (this.type) {
             case 'standard':
-                this.ctx.fillStyle = 'red'
-                this.ctx.fillRect(this.position.x, this.position.y, this.size.w, this.size.h)
+                this.ctx.drawImage(this.imagePlatOrange, this.position.x, this.position.y, this.size.w, this.size.h)
                 break
             case 'doubleJump':
-                this.ctx.fillStyle = 'blue'
-                this.ctx.fillRect(this.position.x, this.position.y, this.size.w, this.size.h)
+                this.ctx.drawImage(this.imagePlatBlue, this.position.x, this.position.y, this.size.w, this.size.h)
                 break
             case 'broken':
-                this.ctx.fillStyle = 'black'
-                this.ctx.fillRect(this.position.x, this.position.y, this.size.w, this.size.h)
+                this.ctx.drawImage(this.imagePlatPurple, this.position.x, this.position.y, this.size.w, this.size.h)
                 break
             default:
-                this.ctx.fillStyle = 'pink'
-                this.ctx.fillRect(this.position.x, this.position.y, this.size.w, this.size.h)
+                this.ctx.drawImage(this.imagePlatYellow, this.position.x, this.position.y, this.size.w, this.size.h)
                 break
         }
     }

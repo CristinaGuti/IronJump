@@ -1,8 +1,56 @@
 body {
     text-align: center;
+    font-family: 'Indie Flower';
+    background-image: url("../img/background.jpg");
+    background-size: cover;
+    /* background-color: rgb(222, 222, 224); */
+}
+
+h1 {
+    font-size: 100px;
+    padding-bottom: 20px;
+}
+
+.screen {
+    margin-top: 100px;
+    text-align: center;
 }
 
 canvas {
-    margin-top: 30px;
-    background-color: gray;
+    margin-top: 20px;
+}
+
+.display-none {
+    display: none;
+}
+
+#easy-button {
+    font-size: 40px;
+    background-color: #141313;
+    color: #fff;
+    padding: 10px 20px;
+    border: 0;
+    box-shadow: 0;
+    border-radius: 5px;
+    margin-bottom: 50px;
+}
+
+.play-buttons {
+    margin-bottom: 50px;
+    font-size: 20px;
+}
+
+#hard-button {
+    font-size: 40px;
+    background-color: #141313;
+    color: #fff;
+    padding: 10px 20px;
+    border: 0;
+    box-shadow: 0;
+    border-radius: 5px;
+    margin-bottom: 50px;
+}
+
+.arrows-img {
+    width: 200px;
 }
