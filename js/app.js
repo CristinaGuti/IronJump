@@ -16,9 +16,13 @@ const IronJump = {
         SPACE: ' '
     },
     player: undefined,
+    score: 0,
+    platformTypes: ['standard', 'doubleJump', 'broken'],
+    platformType: '',
     platforms: [],
     platformSize: { w: undefined, h: undefined },
     platformPosition: { x: undefined, y: undefined },
+
 
     init() {
         this.setContext()
@@ -32,14 +36,20 @@ const IronJump = {
     start() {
         setInterval(() => {
             this.clearAll()
+
             this.drawAll()
-            console.log(this.platforms)
+
+            this.checkCollision()
+
             this.generatePlatforms()
             this.clearPlatforms()
 
-            // this.checkCollision()
-            // this.checkInitCollision()
             this.framesCounter++
+
+            if (this.framesCounter % 10 === 0) this.score++
+
+            if (this.player.position.y > this.canvasSize.h + 20) { this.gameOver() }
+
 
         }, 1000 / this.FPS)
     },
@@ -70,20 +80,27 @@ const IronJump = {
     },
 
     generatePlatforms() {
-        if (this.framesCounter % 30 === 0) {
+        if (this.framesCounter % 20 === 0) {
             this.platformSize = { w: 60, h: 10 }
             this.platformPosition = {
                 x: Math.random() * (this.canvasSize.w - this.platformSize.w),
                 y: (-this.platformSize.h)
             }
-            this.platforms.push(new Platform(this.ctx, this.canvasSize, this.platformSize, this.platformPosition))
+            this.platformType = this.platformTypes[Math.floor(Math.random() * (this.platformTypes.length))]
+
+            this.platforms.push(new Platform(this.ctx, this.platformSize, this.platformPosition, this.platformType))
         }
     },
 
     initialPlatforms() {
-        this.platformSize = { w: 350, h: 10 }
-        this.position = { x: 0, y: 550 }
-        this.platforms.push(new Platform(this.ctx, this.canvasSize, this.size, this.position))
+        for (let i = 100; i < this.canvasSize.h; i += 150) {
+            this.platformSize = { w: 200, h: 10 }
+            this.platformPosition = {
+                x: Math.random() * (this.canvasSize.w - this.platformSize.w),
+                y: i
+            }
+            this.platforms.push(new Platform(this.ctx, this.platformSize, this.platformPosition))
+        }
     },
 
     clearPlatforms() {
@@ -92,8 +109,8 @@ const IronJump = {
 
     drawAll() {
         this.player.draw()
+        this.drawScore()
 
-        console.log(this.platforms)
         this.platforms.forEach(eachPlatform => eachPlatform.draw())
     },
 
@@ -107,8 +124,21 @@ const IronJump = {
                 this.player.position.x <= eachPlatform.position.x + eachPlatform.size.w &&
                 this.player.position.y + this.player.size.h + this.player.speed.y >= eachPlatform.position.y &&
                 this.player.position.y + this.player.size.h <= eachPlatform.position.y + eachPlatform.size.h) {
-                this.player.collision = true
+                this.player.jumpCollision(eachPlatform.type)
             }
         })
     },
+
+    drawScore() {
+        this.ctx.fillStyle = 'black'
+        this.ctx.font = '25px sans-serif'
+        this.ctx.textAlign = 'center'
+        this.ctx.fillText(`Score: ${this.score}`, 150, 50)
+    },
+
+    gameOver() {
+        clearInterval(this.setInterval) // no funciona bien
+        // alert('Game Over')
+        location.reload()
+    }
 }
