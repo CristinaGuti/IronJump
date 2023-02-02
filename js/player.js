@@ -69,7 +69,7 @@ class Player {
                 case 'doubleJump':
                     this.speed.y = -(this.jumpSpeed * 1.2)
                     break
-                case 'broken':
+                case 'smallJump':
                     this.speed.y = - (this.jumpSpeed / 2)
                     break
                 default:

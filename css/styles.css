@@ -3,7 +3,6 @@ body {
     font-family: 'Indie Flower';
     background-image: url("../img/background.jpg");
     background-size: cover;
-    /* background-color: rgb(222, 222, 224); */
 }
 
 h1 {
@@ -12,7 +11,7 @@ h1 {
 }
 
 .screen {
-    margin-top: 100px;
+    margin-top: 30px;
     text-align: center;
 }
 
@@ -24,33 +23,59 @@ canvas {
     display: none;
 }
 
-#easy-button {
-    font-size: 40px;
-    background-color: #141313;
-    color: #fff;
-    padding: 10px 20px;
-    border: 0;
-    box-shadow: 0;
-    border-radius: 5px;
-    margin-bottom: 50px;
-}
-
-.play-buttons {
-    margin-bottom: 50px;
+p {
     font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 5px;
 }
 
-#hard-button {
-    font-size: 40px;
+.name {
+    margin-bottom: 50px;
+}
+
+.button {
+    font-size: 30px;
     background-color: #141313;
     color: #fff;
     padding: 10px 20px;
     border: 0;
     box-shadow: 0;
     border-radius: 5px;
-    margin-bottom: 50px;
+    margin-bottom: 40px;
+}
+
+#save-button {
+    font-size: 20px;
+    background-color: #141313;
+    color: #fff;
+    padding: 2px 20px;
+    border: 0;
+    box-shadow: 0;
+    border-radius: 5px;
+}
+
+.input-text {
+    font-size: 20px;
+    background-color: #f8e4e4;
+    color: #141313;
+    border: 1;
+    box-shadow: 0;
+    border-radius: 5px;
 }
 
 .arrows-img {
     width: 200px;
+    margin-bottom: 40px;
+}
+
+.orange {
+    color: orangered;
+}
+
+.blue {
+    color: blue;
+}
+
+.purple {
+    color: purple;
 }

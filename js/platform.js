@@ -1,13 +1,12 @@
 class Platform {
 
-    constructor(ctx, size, position, type) {
+    constructor(ctx, size, position, speed, type) {
 
         this.ctx = ctx
         this.size = size
         this.position = position
+        this.speed = speed
         this.type = type
-
-        this.speed = 2
 
         this.init()
     }
@@ -33,11 +32,11 @@ class Platform {
             case 'doubleJump':
                 this.ctx.drawImage(this.imagePlatBlue, this.position.x, this.position.y, this.size.w, this.size.h)
                 break
-            case 'broken':
+            case 'smallJump':
                 this.ctx.drawImage(this.imagePlatPurple, this.position.x, this.position.y, this.size.w, this.size.h)
                 break
             default:
-                this.ctx.drawImage(this.imagePlatYellow, this.position.x, this.position.y, this.size.w, this.size.h)
+                this.ctx.drawImage(this.imagePlatOrange, this.position.x, this.position.y, this.size.w, this.size.h)
                 break
         }
     }

@@ -9,6 +9,9 @@
   <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css' rel='stylesheet'
     integrity='sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD' crossorigin='anonymous'>
 
+  <link rel="shortcut icon" href="favicon/favicon.ico">
+  <link rel="icon" type="image" href="./img/icon.png">
+
   <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="./css/styles.css">
@@ -19,14 +22,30 @@
 <body>
   <div id="start-screen" class="screen">
     <h1>Iron Jump</h1>
-    <button id="easy-button">Easy</button>
-    <button id="hard-button">Hard</button>
-    <p class="play-buttons"> Use the left and rigth arrow to control the player</p>
+
+    <p class="name">Your name:
+      <input type="text" class="input-text">
+      <button id="save-button">Save</button>
+    </p>
+
+    <p>Select difficulty:</p>
+    <button id="easy-button" class="button">Easy</button>
+    <button id="hard-button" class="button">Hard</button>
+
+    <p> Use the left and rigth arrow to control the player</p>
+
     <img src="./img/arrows.png" alt="" class="arrows-img">
+
+    <p class="orange"> Orange platform: normal jump</p>
+    <p class="blue">Blue platform: double jump</p>
+    <p class="purple">Purple platform: small jump</p>
   </div>
+
+
 
   <canvas id="canvas" class="display-none"></canvas>
 
+  <script src="./js/audios.js"></script>
   <script src="./js/background.js"></script>
   <script src="./js/platform.js"></script>
   <script src="./js/player.js"></script>
