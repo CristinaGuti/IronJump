@@ -174,12 +174,16 @@ const IronJump = {
         this.ctx.fillText(`Score: ${this.score}`, 10, 30)
     },
 
+    printFinalScore() {
+        this.ctx.fillStyle = 'black'
+        this.ctx.font = '50px Indie Flower'
+        this.ctx.fillText(`Score: ${this.score}`, this.canvasSize.w / 4, this.canvasSize.h / 2)
+    },
+
     saveScore() {
         this.IronJumpScore = JSON.parse(localStorage.getItem('IronJumpScore'))
 
-        if (!Array.isArray(this.IronJumpScore)) {
-            this.IronJumpScore = []
-        }
+        if (!Array.isArray(this.IronJumpScore)) this.IronJumpScore = []
 
         this.yourScore = { Name: this.playerName, Difficulty: this.difficulty, Score: this.score }
 
@@ -216,6 +220,7 @@ const IronJump = {
             this.ctx.fillText('Game', 90, this.canvasSize.h / 6)
             this.ctx.fillText('Over', 110, this.canvasSize.h / 6 + 75)
 
+            this.printFinalScore()
             //this.printSaveScore()
 
             setTimeout(() => location.reload(), 8000)
