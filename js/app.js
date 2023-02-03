@@ -1,9 +1,10 @@
 const IronJump = {
     name: 'IronJump',
     description: 'Game to jump on multiple platforms',
-    version: '2.1',
+    version: '2.2',
     license: undefined,
     author: 'Cristina Gutierrez y Daniel de Miguel',
+
     canvasTag: undefined,
     ctx: undefined,
     canvasSize: { w: 400, h: 650 },
@@ -14,21 +15,24 @@ const IronJump = {
     keys: {
         LEFT: 'ArrowLeft',
         RIGTH: 'ArrowRight',
-        SPACE: ' '
     },
     textPx: 25,
+
     player: undefined,
     playerName: 'player',
     background: undefined,
     audio: undefined,
+
     score: 1,
     yourScore: undefined,
     IronJumpScore: [],
+
     platformTypes: ['standard', 'standard', 'standard', 'standard', 'standard', 'standard', 'standard', 'doubleJump', 'doubleJump', 'smallJump'],
     platformType: '',
     platforms: [],
     platformSize: { w: undefined, h: undefined },
     platformPosition: { x: undefined, y: undefined },
+
 
     init(playerName = 'player', difficulty) {
         this.playerName = playerName
@@ -50,14 +54,14 @@ const IronJump = {
 
     start() {
         this.interval = setInterval(() => {
+            this.framesCounter > 5000 ? this.framesCounter = 0 : this.framesCounter++
+            if (this.framesCounter % 10 === 0) this.score++
+
             this.clearAll()
             this.drawAll()
 
             this.generatePlatforms()
             this.checkCollision()
-
-            this.framesCounter > 5000 ? this.framesCounter = 0 : this.framesCounter++
-            if (this.framesCounter % 10 === 0) this.score++
 
             this.checkGameOver()
 
@@ -224,33 +228,23 @@ const IronJump = {
         this.textPx = 50
         this.ctx.font = `${this.textPx}px Indie Flower`
 
-        // const phrasesGerman = ['!Super!', '!Party!', '!Que calor!', 'All Right!', 'TIKI TIKI']
-        // const phrases = phrasesGerman[Math.floor(Math.random() * (phrasesGerman.length))]
-        // let stateScore
-        // if (this.score % 10 === 0) stateScore = true
-        // if (stateScore) {
-        //     this.ctx.fillText(phrases, this.canvasSize.w / 3, this.canvasSize.h / 2)
-        //     this.audio.reproduce(phrases)
-        //     stateScore = false
-        // }
-
-        if (this.score >= 80 && this.score <= 90) {
+        if (this.score >= 60 && this.score <= 70 || this.score >= 360 && this.score <= 370) {
             this.ctx.fillText('!Super!', this.canvasSize.w / 3, this.canvasSize.h / 2)
             this.audio.reproduce('!Super!')
         }
-        else if (this.score >= 160 && this.score <= 170) {
+        else if (this.score >= 120 && this.score <= 130 || this.score >= 420 && this.score <= 430) {
             this.ctx.fillText('!Party!', this.canvasSize.w / 4, this.canvasSize.h / 2)
             this.audio.reproduce('!Party!')
         }
-        else if (this.score >= 240 && this.score <= 250) {
+        else if (this.score >= 180 && this.score <= 190 || this.score >= 480 && this.score <= 490) {
             this.ctx.fillText('!Que calor!', this.canvasSize.w / 4, this.canvasSize.h / 2)
             this.audio.reproduce('!Que calor!')
         }
-        else if (this.score >= 320 && this.score <= 330) {
+        else if (this.score >= 240 && this.score <= 250 || this.score >= 540 && this.score <= 550) {
             this.ctx.fillText('All Right!', this.canvasSize.w / 4, this.canvasSize.h / 2)
             this.audio.reproduce('All Right!')
         }
-        else if (this.score >= 400 && this.score <= 410) {
+        else if (this.score >= 300 && this.score <= 310 || this.score >= 600 && this.score <= 610) {
             this.ctx.fillText('TIKI TIKI', this.canvasSize.w / 4, this.canvasSize.h / 2 - 50)
             this.ctx.fillText('MIAU MIAU', this.canvasSize.w / 4, this.canvasSize.h / 2 + 50)
             this.audio.reproduce('TIKI TIKI')
